@@ -26,7 +26,7 @@
             {{$slot }}
         </main>
     
-        @include('layouts.partials.footer')
+        
 
         @stack('modals')
         @livewireScripts
