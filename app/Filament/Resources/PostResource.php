@@ -54,7 +54,7 @@ class PostResource extends Resource
                 )->columns(2),
                 Section::make('Meta')->schema(
                     [
-                        FileUpload::make('image')->image()->directory('posts/thumbnails'),
+                        FileUpload::make('thumb')->image()->visibility('private')->directory(env('AWS_PASTA') . 'posts')->disk('s3'),
                         DateTimePicker::make('published_at')->nullable(),
                         Checkbox::make('featured'),
                         Select::make('user_id')
@@ -74,7 +74,7 @@ class PostResource extends Resource
     {
         return $table
             ->columns([
-                ImageColumn::make('image'),
+                ImageColumn::make('thumb'),
                 TextColumn::make('title')->sortable()->searchable(),
                 TextColumn::make('slug')->sortable()->searchable(),
                 TextColumn::make('author.name')->sortable()->searchable(),
