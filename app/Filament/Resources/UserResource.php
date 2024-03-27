@@ -84,4 +84,14 @@ class UserResource extends Resource
             'edit' => Pages\EditUser::route('/{record}/edit'),
         ];
     }
+
+    public static function getModelLabel(): string
+    {
+        return __('Usuário');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('Usuários');
+    }
 }

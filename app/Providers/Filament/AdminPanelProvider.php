@@ -4,6 +4,7 @@ namespace App\Providers\Filament;
 
 use App\Filament\Resources\CommentResource\Widgets\LatestCommentsWidget;
 use App\Filament\Resources\PostResource\Widgets\PostsPerMonthChart;
+use App\Filament\Resources\PostResource\Widgets\PostStatsWidget;
 use Filament\Http\Middleware\Authenticate;
 use App\Filament\Resources\UserResource\Widgets\UserStatsWidget;
 use Filament\Http\Middleware\DisableBladeIconComponents;

@@ -154,4 +154,14 @@ class PostResource extends Resource
                 SoftDeletingScope::class,
             ]);
     }
+
+    public static function getModelLabel(): string
+    {
+        return __('Artigo');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('Artigos');
+    }
 }
