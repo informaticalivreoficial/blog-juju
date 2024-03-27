@@ -53,7 +53,26 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'role'
+        'role',
+
+        'gender',
+        'cpf',
+        'rg',
+        'rg_expedition',
+        'birthday',
+        'naturalness',
+        'civil_status',
+        'avatar',  
+
+        //Address      
+        'postcode', 'street', 'number', 'complement', 'neighborhood', 'state', 'city',
+        //Contact
+        'phone', 'cell_phone', 'whatsapp', 'skype', 'telegram', 'email', 'additional_email',
+        //Social
+        'facebook', 'twitter', 'instagram',
+
+        'status',
+        'information'
     ];
 
     /**
@@ -77,14 +96,7 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    /**
-     * The accessors to append to the model's array form.
-     *
-     * @var array<int, string>
-     */
-    protected $appends = [
-        'profile_photo_path',
-    ];
+   
 
     public function likes()
     {

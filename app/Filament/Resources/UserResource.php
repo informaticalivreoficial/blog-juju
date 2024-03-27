@@ -20,6 +20,10 @@ class UserResource extends Resource
 {
     protected static ?string $model = User::class;
 
+    protected static ?string $navigationLabel = 'Usuários';
+
+    protected static ?string $slug = 'usuarios';
+
     protected static ?string $navigationIcon = 'heroicon-o-users';
 
     public static function form(Form $form): Form
@@ -44,7 +48,7 @@ class UserResource extends Resource
         return $table
             ->defaultPaginationPageOption(25)
             ->columns([
-                ImageColumn::make('profile_photo_path')->label('Foto')->circular(),
+                ImageColumn::make('avatar')->label('Foto')->circular(),
                 TextColumn::make('name')->label('Nome')->searchable(),
                 TextColumn::make('email')->label('Email')->searchable(),                
                 TextColumn::make('created_at')->label('Data')->dateTime('d/m/Y')->sortable(),
@@ -54,7 +58,9 @@ class UserResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\ViewAction::make()->iconButton(),
+                Tables\Actions\EditAction::make()->iconButton(),
+                Tables\Actions\DeleteAction::make()->iconButton(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

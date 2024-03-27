@@ -28,17 +28,22 @@ class PostResource extends Resource
 {
     protected static ?string $model = Post::class;
 
+    protected static ?string $navigationLabel = 'Artigos';
+
+    protected static ?string $slug = 'artigos';
+
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Section::make('Main Content')->schema(
+                Section::make('Conteúdo')->schema(
                     [
                         TextInput::make('title')
+                            ->label('Título')
                             ->live()
-                            ->required()->minLength(1)->maxLength(150)
+                            ->required()->minLength(3)->maxLength(150)
                             ->afterStateUpdated(function (string $operation, $state, Forms\Set $set) {
                                 if ($operation === 'edit') {
                                     return;
@@ -47,21 +52,50 @@ class PostResource extends Resource
                                 $set('slug', Str::slug($state));
                             }),
                         TextInput::make('slug')->required()->minLength(1)->unique(ignoreRecord: true)->maxLength(150),
-                        RichEditor::make('body')
+                        RichEditor::make('content')
                             ->required()
-                            ->fileAttachmentsDirectory('posts/images')->columnSpanFull()
+                            ->label('Conteúdo')
+                            ->fileAttachmentsDisk('s3')
+                            ->fileAttachmentsDirectory(env('AWS_PASTA') . 'posts/images')
+                            ->fileAttachmentsVisibility('private')                            
+                            ->columnSpanFull()
+                            ->toolbarButtons([
+                                'attachFiles',
+                                'blockquote',
+                                'bold',
+                                'bulletList',
+                                'codeBlock',
+                                'h2',
+                                'h3',
+                                'italic',
+                                'link',
+                                'orderedList',
+                                'redo',
+                                'strike',
+                                'underline',
+                                'undo',
+                            ])
                     ]
                 )->columns(2),
                 Section::make('Meta')->schema(
                     [
-                        FileUpload::make('thumb')->image()->visibility('private')->directory(env('AWS_PASTA') . 'posts')->disk('s3'),
-                        DateTimePicker::make('published_at')->nullable(),
-                        Checkbox::make('featured'),
+                        FileUpload::make('thumb')
+                            ->label('Imagem')
+                            ->disk('s3')
+                            ->visibility('private')
+                            ->directory(env('AWS_PASTA') . 'posts')
+                            ->image(),
+                        DateTimePicker::make('published_at')
+                            ->label('Publicar em')
+                            ->nullable(),
+                        Checkbox::make('featured')->label('Destaque'),
                         Select::make('user_id')
                             ->relationship('author', 'name')
+                            ->label('Autor')
                             ->searchable()
                             ->required(),
                         Select::make('categories')
+                            ->label('Categoria')
                             ->multiple()
                             ->relationship('categories', 'title')
                             ->searchable(),
@@ -75,17 +109,18 @@ class PostResource extends Resource
         return $table
             ->columns([
                 ImageColumn::make('thumb'),
-                TextColumn::make('title')->sortable()->searchable(),
-                TextColumn::make('slug')->sortable()->searchable(),
-                TextColumn::make('author.name')->sortable()->searchable(),
-                TextColumn::make('published_at')->date('Y-m-d')->sortable()->searchable(),
-                CheckboxColumn::make('featured'),
+                TextColumn::make('title')->label('Título')->sortable()->searchable(),
+                //TextColumn::make('author.name')->sortable()->searchable(),
+                TextColumn::make('published_at')->label('Publicado')->date('d/m/Y')->sortable()->searchable(),
+                CheckboxColumn::make('featured')->label('Destaque'),
             ])
             ->filters([
                 Tables\Filters\TrashedFilter::make(),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\ViewAction::make()->iconButton(),
+                Tables\Actions\EditAction::make()->iconButton(),
+                Tables\Actions\DeleteAction::make()->iconButton(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

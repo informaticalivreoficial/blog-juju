@@ -8,6 +8,8 @@ use Filament\Http\Middleware\Authenticate;
 use App\Filament\Resources\UserResource\Widgets\UserStatsWidget;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
+use Filament\Navigation\MenuItem;
+use Filament\Navigation\NavigationItem;
 use Filament\Pages;
 use Filament\Panel;
 use Filament\PanelProvider;
@@ -30,13 +32,25 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
+            ->brandName(config('app.name'))
+            //->profile()
             ->colors([
-                'primary' => Color::Amber,
+                'primary' => Color::Teal,
             ])
+            ->favicon(asset('backend/assets/images/chave.png'))
+            ->brandLogo(asset('backend/assets/images/logo.png'))
+            ->sidebarFullyCollapsibleOnDesktop()
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([
                 Pages\Dashboard::class,
+            ])
+            ->navigationItems([
+                NavigationItem::make('Blog')
+                ->url('http://localhost/', shouldOpenInNewTab:true)
+                ->icon('heroicon-o-pencil-square')
+                ->group('Links')
+                ->sort(2)
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
@@ -57,6 +71,9 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
+            ])
+            ->userMenuItems([
+                'logout' => MenuItem::make()->label('Sair'),
             ]);
     }
 }

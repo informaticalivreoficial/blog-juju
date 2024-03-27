@@ -19,8 +19,40 @@ return new class extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->foreignId('current_team_id')->nullable();
-            $table->string('profile_photo_path', 2048)->nullable();
+
+            $table->string('gender')->nullable();
+            $table->string('cpf')->nullable();
+            $table->string('rg', 20)->nullable();
+            $table->string('rg_expedition')->nullable();
+            $table->date('birthday')->nullable();
+            $table->string('naturalness')->nullable();
+            $table->string('civil_status')->nullable();
+            $table->string('avatar')->nullable();
+            $table->string('additional_email')->nullable();
+
+            /** address */
+            $table->string('postcode')->nullable();
+            $table->string('street')->nullable();
+            $table->string('number')->nullable();
+            $table->string('complement')->nullable();
+            $table->string('neighborhood')->nullable();
+            $table->string('state')->nullable();
+            $table->string('city')->nullable();
+
+            /** contact */
+            $table->string('phone')->nullable();
+            $table->string('cell_phone')->nullable();
+            $table->string('whatsapp')->nullable();
+            $table->string('skype')->nullable();
+            $table->string('telegram')->nullable();
+
+            /** Redes Sociais */
+            $table->string('facebook')->nullable();
+            $table->string('twitter')->nullable();            
+            $table->string('instagram')->nullable();
             $table->integer('status')->default('0');
+            $table->longText('information')->nullable();
+            
             $table->timestamps();
         });
     }
