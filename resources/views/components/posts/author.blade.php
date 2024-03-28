@@ -20,5 +20,5 @@
     
 @endphp
 
-<img class="mr-3 rounded-full {{ $imageSize }}" src="{{ $author->profile_photo_url }}" alt="{{ $author->name }}">
+<img class="mr-3 rounded-full {{ $imageSize }}" src="{{ $author->avatar }}" alt="{{ $author->name }}">
 <span class="mr-1 {{ $textSize }}">{{ $author->name }} </span>
