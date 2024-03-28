@@ -113,4 +113,55 @@ class User extends Authenticatable implements FilamentUser
     {
         return $this->hasMany(Comment::class);
     }
+
+    /**
+     * Accerssors and Mutators
+    */
+    public function setCellPhoneAttribute($value)
+    {
+        $this->attributes['cell_phone'] = (!empty($value) ? $this->clearField($value) : null);
+    }
+    
+    public function getCellPhoneAttribute($value)
+    {
+        if (empty($value)) {
+            return null;
+        }
+        return  
+            substr($value, 0, 0) . '(' .
+            substr($value, 0, 2) . ') ' .
+            substr($value, 2, 5) . '-' .
+            substr($value, 7, 4) ;
+    }
+
+    public function setBirthdayAttribute($value)
+    {
+        $this->attributes['birthday'] = (!empty($value) ? $this->convertStringToDate($value) : null);
+    }
+
+    private function convertStringToDouble(?string $param)
+    {
+        if (empty($param)) {
+            return null;
+        }
+
+        return str_replace(',', '.', str_replace('.', '', $param));
+    }
+
+    private function convertStringToDate(?string $param)
+    {
+        if (empty($param)) {
+            return null;
+        }
+        list($day, $month, $year) = explode('/', $param);
+        return (new \DateTime($year . '-' . $month . '-' . $day))->format('Y-m-d');
+    }
+    
+    private function clearField(?string $param)
+    {
+        if (empty($param)) {
+            return null;
+        }
+        return str_replace(['.', '-', '/', '(', ')', ' '], '', $param);
+    }
 }
