@@ -48,7 +48,7 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->navigationItems([
                 NavigationItem::make('Blog')
-                ->url('http://localhost/', shouldOpenInNewTab:true)
+                ->url('https://juliamontanari.com.br', shouldOpenInNewTab:true)
                 ->icon('heroicon-o-pencil-square')
                 ->group('Links')
                 ->sort(2)

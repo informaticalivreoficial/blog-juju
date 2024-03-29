@@ -6,19 +6,19 @@
         <div class="ml-10 top-menu">
             <div class="flex space-x-4">
                 <x-nav-link href="{{ route('home') }}" :active="request()->routeIs('home')">
-                    {{ __('menu.home') }}
+                    Início
                 </x-nav-link>
                 <x-nav-link href="{{ route('posts.index') }}" :active="request()->routeIs('posts.index')">
-                    {{ __('menu.blog') }}
+                    Blog
                 </x-nav-link>
             </div>
         </div>
     </div>
     <div id="nav-right" class="flex items-center md:space-x-6">
-        @auth
+       {{-- @auth
             @include('layouts.partials.header-right-auth')
         @else
             @include('layouts.partials.header-right-guest')
-        @endauth
+        @endauth--}}
     </div>
 </nav>
