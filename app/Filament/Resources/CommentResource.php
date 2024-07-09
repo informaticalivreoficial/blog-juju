@@ -7,6 +7,7 @@ use App\Filament\Resources\CommentResource\RelationManagers;
 use App\Models\Comment;
 use Filament\Forms;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -44,7 +45,7 @@ class CommentResource extends Resource
                     ->searchable()
                     ->preload()
                     ->required(),
-                TextInput::make('comment')->required()->minLength(1)->maxLength(255)
+                Textarea::make('comment')->required()->minLength(1)->maxLength(255)
             ]);
     }
 

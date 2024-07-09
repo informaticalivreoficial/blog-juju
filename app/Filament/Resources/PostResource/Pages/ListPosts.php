@@ -21,7 +21,7 @@ class ListPosts extends ListRecords
     protected function getFooterWidgets(): array
     {
         return [
-            PostsPerMonthChart::class,
+            //PostsPerMonthChart::class,
         ];
     }
 }
