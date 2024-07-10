@@ -113,7 +113,7 @@ class PostResource extends Resource
         return $table
             ->columns([
                 ImageColumn::make('thumb'),
-                TextColumn::make('title')->label('Título')->sortable()->searchable(),
+                TextColumn::make('title')->limit(50)->label('Título')->sortable()->searchable(),
                 //TextColumn::make('author.name')->sortable()->searchable(),
                 TextColumn::make('published_at')->label('Publicado')->date('d/m/Y')->sortable()->searchable(),
                 CheckboxColumn::make('featured')->label('Destaque'),
