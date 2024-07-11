@@ -86,7 +86,7 @@ class Post extends Model
     {
         $mins = round(str_word_count($this->body) / 250);
 
-        return ($mins < 1) ? 1 : $mins;
+        return ($mins < 1) ? 1 : $mins;  
     }
 
     public function getThumbnailUrl()
